@@ -1,18 +1,19 @@
 import React from "react";
 
 //icons
-import { Box } from "lucide-react";
+import { Box, Wand } from "lucide-react";
 
 //components
 import IndustrySelection from "./IndustrySelection";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import Difficulty from "./Difficulty";
+import { Button } from "./ui/button";
 
 function Content() {
   return (
-    <div className="flex items-start gap-4">
-      <div className="p-4 rounded-md bg-white shadow-md max-w-md">
+    <div className="flex flex-col lg:flex-row items-start gap-8">
+      <div className="p-4 rounded-md bg-white shadow-md w-full lg:w-[450px]">
         {/* header */}
         <div className="flex items-center gap-4 mb-6">
           <Box className="p-2 rounded-sm border size-10 border-gray-400 text-blue-500" />
@@ -28,7 +29,18 @@ function Content() {
 
         {/* inputs */}
         <div className="flex flex-col gap-6 items-center">
-          <IndustrySelection />
+          <div className="grid w-full items-center gap-2">
+            <Label htmlFor="text" className="text-gray-400">
+              Industry:
+            </Label>
+            <IndustrySelection />
+          </div>
+          <div className="grid w-full items-center gap-2">
+            <Label htmlFor="text" className="text-gray-400">
+              Application Type:
+            </Label>
+            <IndustrySelection />
+          </div>
           <div className="grid w-full items-center gap-2">
             <Label htmlFor="text" className="text-gray-400">
               Target Audience:
@@ -41,12 +53,19 @@ function Content() {
             />
           </div>
           <Difficulty />
+          <Button className="w-full font-semibold">
+            Summon My Title <Wand />
+          </Button>
         </div>
       </div>
 
       {/* generated titles */}
-      <div className="p-4 rounded-md bg-white shadow-md flex flex-grow">
-        <div className="rounded-md border border-dashed p-4">Test</div>
+      <div className="p-4 rounded-md bg-white shadow-md w-full lg:flex-grow min-h-[200px]">
+        <div className="flex items-center justify-center rounded-md border-2 border-dashed p-4 w-full min-h-[450px]">
+          <p className="font-primary font-bold text-xl text-gray-300">
+            Title will appear here.
+          </p>
+        </div>
       </div>
     </div>
   );

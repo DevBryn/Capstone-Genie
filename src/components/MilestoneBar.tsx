@@ -22,7 +22,9 @@ function MilestoneBar() {
 
       {/* footer */}
       <div className="hidden lg:flex">
-        <p className="text-white/50 text-sm">Footer</p>
+        <p className="text-xs text-white/50 select-none">
+          &copy; 2025. CapstoneGenie.
+        </p>
       </div>
     </div>
   );

@@ -13,13 +13,13 @@ function Difficulty() {
   };
 
   return (
-    <div className="flex flex-col items-start gap-2">
+    <div className="flex flex-col items-start gap-2 w-full">
       <Label htmlFor="text" className="text-gray-400">
         Select Difficulty:
       </Label>
-      <fieldset className="flex items-center gap-4">
+      <fieldset className="flex flex-col lg:flex-row items-center gap-4 w-full">
         {/* Easy */}
-        <div>
+        <div className="w-full">
           <label
             htmlFor="DeliveryStandard"
             className={`flex cursor-pointer justify-between gap-4 rounded-lg border ${
@@ -45,7 +45,7 @@ function Difficulty() {
         </div>
 
         {/* Intermediate */}
-        <div>
+        <div className="w-full">
           <label
             htmlFor="DeliveryPriority"
             className={`flex cursor-pointer justify-between gap-4 rounded-lg border ${
@@ -71,7 +71,7 @@ function Difficulty() {
         </div>
 
         {/* Advance */}
-        <div>
+        <div className="w-full">
           <label
             htmlFor="DeliveryAdvance"
             className={`flex cursor-pointer justify-between gap-4 rounded-lg border ${
