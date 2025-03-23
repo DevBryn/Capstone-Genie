@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -19,32 +20,36 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+// API call
+import { getIndustries } from "@/lib/api";
+
+// Define industry type based on API response
+interface Industry {
+  id: string;
+  label: string;
+}
 
 export default function IndustrySelection() {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<string>("");
+  const [industries, setIndustries] = useState<Industry[]>([]);
+
+  // Fetch industries on mount
+  useEffect(() => {
+    const fetchIndustries = async () => {
+      const data = await getIndustries();
+      if (data?.content) {
+        // Map API response to expected format
+        const industryOptions = data.content.map((industry: Industry) => ({
+          id: industry.id,
+          label: industry.label,
+        }));
+        setIndustries(industryOptions);
+      }
+    };
+
+    fetchIndustries();
+  }, []);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -56,7 +61,7 @@ export default function IndustrySelection() {
           className="w-full justify-between"
         >
           {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+            ? industries.find((industry) => industry.id === value)?.label
             : "Select industry"}
           <ChevronsUpDown className="opacity-50" />
         </Button>
@@ -65,27 +70,30 @@ export default function IndustrySelection() {
         <Command>
           <CommandInput placeholder="Search industry" />
           <CommandList>
-            <CommandEmpty>No industry found.</CommandEmpty>
-            <CommandGroup>
-              {frameworks.map((framework) => (
-                <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  {framework.label}
-                  <Check
-                    className={cn(
-                      "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                </CommandItem>
-              ))}
-            </CommandGroup>
+            {industries.length === 0 ? (
+              <CommandEmpty>No industry found.</CommandEmpty>
+            ) : (
+              <CommandGroup>
+                {industries.map((industry) => (
+                  <CommandItem
+                    key={industry.id}
+                    value={industry.id}
+                    onSelect={(currentValue) => {
+                      setValue(currentValue === value ? "" : currentValue);
+                      setOpen(false);
+                    }}
+                  >
+                    {industry.label}
+                    <Check
+                      className={cn(
+                        "ml-auto",
+                        value === industry.id ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
           </CommandList>
         </Command>
       </PopoverContent>

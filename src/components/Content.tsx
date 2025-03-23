@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 //icons
@@ -5,6 +6,7 @@ import { Box, Wand } from "lucide-react";
 
 //components
 import IndustrySelection from "./IndustrySelection";
+import ProjectType from "./ProjectType";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import Difficulty from "./Difficulty";
@@ -39,7 +41,7 @@ function Content() {
             <Label htmlFor="text" className="text-gray-400">
               Application Type:
             </Label>
-            <IndustrySelection />
+            <ProjectType />
           </div>
           <div className="grid w-full items-center gap-2">
             <Label htmlFor="text" className="text-gray-400">
